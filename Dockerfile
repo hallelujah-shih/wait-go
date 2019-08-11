@@ -1,10 +1,12 @@
 FROM golang:alpine AS waiter
 
+ENV SRC_DIR $GOPATH/src/github.com/hallelujah-shih/wait-go
+
 RUN apk update && apk add git
 
-RUN go get github.com/hallelujah-shih/wait-go
+WORKDIR $SRC_DIR
 
-WORKDIR /go/src/github.com/hallelujah-shih/wait-go
+COPY . $SRC_DIR
 
 RUN CGO_ENABLED=0 go build -ldflags="-w -s" -o /go/bin/wait-go
 
