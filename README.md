@@ -11,7 +11,42 @@
 
 ## 使用方法
 ```
+关于 wait-go的使用方法，参见adrian-gheorghe/wait-go
 
+Dockerfile:
+    FROM xxx AS builder
+    XXX XXX
+    XXXX XXXX
+
+    FROM shihan/wait-go AS waiter
+
+    FROM alpine AS runner
+    COPY --from=waiter /go/bin/wait-go /go/bin/wait-go
+    COPY --from=builder src_path dst_path
+    CMD [xxx xxx]
+
+docker-compose.yml:
+
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "9090:8080"
+    links:
+      - mongo
+      - es
+    depends_on:
+      - mongo
+      - es
+    restart: on-failure
+    command: ["/go/bin/wait-go", "--wait", "es:9200", "--wait", "mongo:27017", "--command", "/go/bin/web_app -c config.yml"]
+
+  mongo:
+    image: mongo
+    command: mongod --smallfiles
+
+  es:
+    image: es-ik:6.7.2
 
 ```
-
