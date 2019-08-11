@@ -117,8 +117,6 @@ func processCommandExec(command string, timeoutFlag int, intervalFlag int, shell
 	if err != nil {
 		log.Printf("Sleeping %d seconds waiting for command - %s - to return\n", intervalFlag, command)
 		time.Sleep(time.Duration(intervalFlag) * time.Second)
-	} else {
-		log.Println(string(out))
 	}
 	cmd.Wait()
 }
