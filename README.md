@@ -40,7 +40,7 @@ services:
       - mongo
       - es
     restart: on-failure
-    command: ["/go/bin/wait-go", "--wait", "es:9200", "--wait", "mongo:27017", "--command", "/go/bin/web_app -c config.yml"]
+    command: ["/go/bin/wait-go", "--wait", "http://es:9200/_cat/health?h=st", "--wait", "mongo:27017", "--command", "/go/bin/web_app -c config.yml"]
 
   mongo:
     image: mongo
