@@ -219,7 +219,7 @@ func main() {
 	var waitsFlags arrayFlags
 	var commandFlags arrayFlags
 
-	flag.Var(&waitsFlags, "wait", "You can specify the HOST and TCP PORT using the format HOST:PORT, or you can specify a command that should return an output. Multiple wait flags can be added.")
+	flag.Var(&waitsFlags, "wait", "You can specify the HOST and TCP PORT using the format HOST:PORT, or http[s]://domain/path?args, or you can specify a command that should return an output. Multiple wait flags can be added.")
 	flag.Var(&commandFlags, "command", "Command that should be run when all waits are accessible. Multiple commands can be added.")
 	timeoutFlag := flag.Int("timeout", 600, "Timeout untill script is killed.")
 	intervalFlag := flag.Int("interval", 15, "Interval between calls")
