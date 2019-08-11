@@ -137,15 +137,6 @@ func checkIsUrl(urlPath string) (bool, *url.URL) {
 }
 
 func processWait(wait string, timeoutFlag int, intervalFlag int, shell string) {
-	pattern, _ := regexp.Compile("(.*):(.*)")
-	matches := pattern.FindAllStringSubmatch(wait, -1)
-	if len(matches) > 0 {
-		host := matches[0][1]
-		port := matches[0][2]
-		checkTcpDial(host, port, intervalFlag)
-		return
-	}
-
 	isUrl, u := checkIsUrl(wait)
 	if isUrl {
 		switch strings.ToLower(u.Scheme) {
@@ -156,6 +147,15 @@ func processWait(wait string, timeoutFlag int, intervalFlag int, shell string) {
 		default:
 			log.Panicln("not support scheme:", u.Scheme)
 		}
+		return
+	}
+
+	pattern, _ := regexp.Compile("(.*):(.*)")
+	matches := pattern.FindAllStringSubmatch(wait, -1)
+	if len(matches) > 0 {
+		host := matches[0][1]
+		port := matches[0][2]
+		checkTcpDial(host, port, intervalFlag)
 		return
 	}
 
